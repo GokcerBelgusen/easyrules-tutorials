@@ -29,7 +29,7 @@ import org.easyrules.quartz.RulesEngineScheduler;
 
 import java.util.Date;
 
-public class Launcher {
+public class  Launcher {
 
     public static final Date NOW = new Date();
 

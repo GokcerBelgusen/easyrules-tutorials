@@ -32,6 +32,13 @@ public class AlcoholRule extends BasicRule {
 
     private Person person;
 
+    public AlcoholRule() {}
+
+    public void sayHello() {
+        System.out.println("hello loader");
+    }
+
+
     public AlcoholRule(Person person) {
         super("AlcoholRule", "Children are not allowed to buy alcohol", 2);
         this.person = person;

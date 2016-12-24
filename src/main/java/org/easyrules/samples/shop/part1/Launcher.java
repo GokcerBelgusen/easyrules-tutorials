@@ -23,14 +23,18 @@
  */
 package org.easyrules.samples.shop.part1;
 
-import static org.easyrules.core.RulesEngineBuilder.aNewRulesEngine;
-
 import org.easyrules.api.RulesEngine;
 import org.easyrules.samples.shop.Person;
+import org.easyrules.samples.shop.part3.JavaClassLoader;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.easyrules.core.RulesEngineBuilder.aNewRulesEngine;
 
 public class Launcher {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
         //create a person instance
         Person tom = new Person("Tom", 14);
         System.out.println("Tom: Hi! can I have some Vodka please?");
@@ -40,9 +44,17 @@ public class Launcher {
                 .named("shop rules engine")
                 .build();
 
-        //register rules
-        rulesEngine.registerRule(new AgeRule(tom));
-        rulesEngine.registerRule(new AlcoholRule(tom));
+
+        JavaClassLoader loader = new JavaClassLoader();
+        List<String> myrules = new ArrayList<>();
+        myrules.add("org.easyrules.samples.shop.part1.AgeRule");
+        myrules.add("org.easyrules.samples.shop.part1.AlcoholRule");
+        Object object = null;
+
+        for (String clazz : myrules) {
+            object = loader.invokeClassMethod(clazz, "sayHello", tom);
+            rulesEngine.registerRule(object);
+        }
 
         //fire rules
         rulesEngine.fireRules();

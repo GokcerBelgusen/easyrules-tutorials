@@ -32,9 +32,15 @@ public class AgeRule extends BasicRule {
 
     private Person person;
 
+    public AgeRule() {}
+
     public AgeRule(Person person) {
         super("AgeRule", "Check if person's age is > 18 and marks the person as adult", 1);
         this.person = person;
+    }
+
+    public void sayHello() {
+        System.out.println("hello loader");
     }
 
     @Override
